@@ -17,9 +17,6 @@ public class Product {
     @Column(name="price")
     private double price;
 
-
-
-
     public Product() {
     }
 

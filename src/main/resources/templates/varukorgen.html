@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Basket</title>
+    <meta charset="UTF-8">
+    <title>Varukorg</title>
 </head>
 <body>
 <h1>Din varukorg</h1>
-<div th:each="product: ${products}">
-  <h2 th:text="${product.getName}"></h2>
-  <h2 th:text="${product.getPrice}"></h2>
-</div>
-<p>
-  <a href="/">Back to Main Menu</a>
-  <a href="/shop">Back to Shop</a>
-</p>
+<form>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Delete</th>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.getName}"></td>
+            <td th:text="${product.getPrice}"></td>
+            <td><a th:href="@{'/delete/' + ${product.id}}">radera</a>
+            </td>
+        </tr>
+    </table>
+</form>
 </body>
+<p>
+    <a href="/create">Lägg till egen produkt</a>
+</p>
+<p>
+    <a href="/shop">Back to Shop</a>
+</p>
+<a href="/">Back to Main Menu</a>
 </html>
+
+
+

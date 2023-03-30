@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-$END$
+<h1><em><strong>Welcome to Jakobs webshop</strong></em></h1>
+Enter a username and password to begin shopping. <br/>
+<form action="/new" method="post">
+    <p>
+        Name: <input type="text" name="name"/> </br>
+        Password: <input type="text" name="password">
+    </p>
+    <p>
+        <input type="submit" value="New Customer"></br>
+    </p>
+
+    <a href="/shop">Enter the shop</a>
+    <p>
+        <a href="/all">Show customers</a>
+    </p>
+</form>
 </body>
 </html>

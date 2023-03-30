@@ -1,6 +1,8 @@
-package com.example.webshoplabb.shop;
+package com.example.webshoplabb.service;
 
 
+import com.example.webshoplabb.shop.Customer;
+import com.example.webshoplabb.shop.Product;
 import com.example.webshoplabb.storage.CustomerRepository;
 import com.example.webshoplabb.storage.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,23 +27,42 @@ public class ShopService {
     public ShopService() {
     }
 
-    public void deleteProduct(int id) {
+    public Product deleteProduct(int id) {
+        productRepository.findById(id);
         productRepository.deleteById(id);
+        return product;
     }
 
-    public Customer add(String name, String password) {
-        Optional<Customer> customer = customerRepository.findByName(name);
-        if (customer.isEmpty()) {
-            this.customer = customerRepository.save(new Customer(name, password));
-        } else {
-            this.customer = customer.get();
+    public void update(Product product) {
+        productRepository.save(product);
+    }
+
+    public Product findById(int id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (!productOptional.isPresent()) {
+            throw new RuntimeException("Product not found");
         }
-        return this.customer;
+        return productOptional.get();
     }
 
-    public Product addProduct(int id, String name, double price) {
-        Product product = new Product(1,"banana",10.0);
-        return productRepository.save(product);
+
+
+    public List <Product> getAllProducts() {
+        List<Product> products = new ArrayList<>();
+        for(Product product:productRepository.findAll()) {
+            products.add(product);
+        }
+        return products;
+    }
+
+    public List <Product> showProducts() {
+        productRepository.save(new Product(1,"Tacos",59.90));
+        productRepository.save(new Product(2,"Chicken",59.90));
+        productRepository.save(new Product(3,"Eggs",29.90));
+        productRepository.save(new Product(4,"Meat",59.90));
+        productRepository.save(new Product(5,"Candy",9.90));
+        productRepository.save(new Product(6,"Special",99.99));
+        return productRepository.findAll();
     }
 
     public void create(Product product) {
@@ -52,20 +73,21 @@ public class ShopService {
         return customerRepository.findAll();
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-
+//    public List<Product> getAllProducts() {
+//        return productRepository.findAll();
+//    }
 
     public Customer getById(long id) {
         return customerRepository.findById(id).get();
     }
 
-    public Product findById(int id) {
-        Optional<Product> productOptional = productRepository.findById(id);
-        if (!productOptional.isPresent()) {
-            throw new RuntimeException("Product not found");
+    public Customer add(String name, String password) {
+        Optional<Customer> customer = customerRepository.findByName(name);
+        if (customer.isEmpty()) {
+            this.customer = customerRepository.save(new Customer(name, password));
+        } else {
+            this.customer = customer.get();
         }
-        return productOptional.get();
+        return this.customer;
     }
 }

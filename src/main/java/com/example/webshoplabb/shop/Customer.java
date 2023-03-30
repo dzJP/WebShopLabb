@@ -17,8 +17,8 @@ public class Customer {
     @Column(name = "password")
     private String password;
 
-//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    private List<Result> results;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Product> products;
     public Customer() {
     }
     public Customer(String name, String password) {
@@ -45,15 +45,15 @@ public class Customer {
         this.password = password;
     }
 
-//    public List<Result> getResults() {
-//        return results;
-//    }
-//
-//    public void setResults(List<Result> results) {
-//        this.results = results;
-//    }
+    public List<Product> getProducts() {
+        return products;
+    }
 
-//    public void addResult(Result result) {
-//        results.add(result);
-//    }
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+    }
 }
