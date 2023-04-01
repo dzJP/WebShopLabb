@@ -1,12 +1,12 @@
 package com.example.webshoplabb.ui;
 
+import com.example.webshoplabb.shop.Cart;
 import com.example.webshoplabb.shop.Product;
-import com.example.webshoplabb.service.ShopService;
+import com.example.webshoplabb.shop.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ShopController {
@@ -32,8 +32,20 @@ public class ShopController {
 
     @GetMapping("/varukorgen")
     public String varukorgen(Model m) {
-        m.addAttribute("products", shopService.getAllProducts());
+        m.addAttribute("products", shopService.getCart());
         return "varukorgen";
+    }
+
+    @PostMapping("/create")
+    public String create1(@RequestParam int id, Model model) {
+        model.addAttribute("product", shopService.addToCart(id));
+        return "varukorgen";
+    }
+
+    @PostMapping("/update")
+    public String updateProduct(@ModelAttribute Product product){
+        shopService.update(product);
+        return "redirect:/";
     }
     @GetMapping("/create")
     public String showCreate() {
@@ -42,7 +54,7 @@ public class ShopController {
     @PostMapping("/create")
     public String createProduct(@ModelAttribute Product product) {
         shopService.create(product);
-        return "redirect:/";
+        return "create";
     }
 
     @GetMapping("/delete/{id}")
@@ -50,25 +62,15 @@ public class ShopController {
         m.addAttribute("id", shopService.deleteProduct(id));
         return "redirect:/varukorgen";
     }
-
-//    @GetMapping("/delete{id}")
-//    public String deleteProduct(@PathVariable("id") int id) {
-//        shopService.deleteProduct(id);
-//        return "redirect:/";
-//    }
-
     @GetMapping("/update/{id}")
     public String update(@PathVariable("id") int id, Model model){
         model.addAttribute("product", shopService.findById(id));
         return "redirect:/";
     }
-
-    @PostMapping("/update")
-    public String updateProduct(@ModelAttribute Product product){
-        shopService.update(product);
-        return "redirect:/";
-    }
-
-
+//    @GetMapping("/delete{id}")
+//    public String deleteProduct(@PathVariable("id") int id) {
+//        shopService.deleteProduct(id);
+//        return "redirect:/";
+//    }
 
 }

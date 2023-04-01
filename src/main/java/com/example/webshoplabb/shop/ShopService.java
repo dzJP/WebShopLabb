@@ -1,10 +1,12 @@
-package com.example.webshoplabb.service;
+package com.example.webshoplabb.shop;
 
 
+import com.example.webshoplabb.shop.Cart;
 import com.example.webshoplabb.shop.Customer;
 import com.example.webshoplabb.shop.Product;
 import com.example.webshoplabb.storage.CustomerRepository;
 import com.example.webshoplabb.storage.ProductRepository;
+import org.aspectj.apache.bcel.generic.RET;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
@@ -23,6 +25,8 @@ public class ShopService {
     ProductRepository productRepository;
     Customer customer;
     Product product;
+
+    Cart cart;
 
     public ShopService() {
     }
@@ -44,8 +48,6 @@ public class ShopService {
         }
         return productOptional.get();
     }
-
-
 
     public List <Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
@@ -81,6 +83,10 @@ public class ShopService {
         return customerRepository.findById(id).get();
     }
 
+    public Product getByIdProduct(int id){
+        return productRepository.findById(id).get();
+    }
+
     public Customer add(String name, String password) {
         Optional<Customer> customer = customerRepository.findByName(name);
         if (customer.isEmpty()) {
@@ -90,4 +96,15 @@ public class ShopService {
         }
         return this.customer;
     }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+
+    public Cart addToCart(int id) {
+
+        return cart;
+    }
 }
+

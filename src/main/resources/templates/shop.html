@@ -19,14 +19,13 @@
       <td th:text="${product.getPrice}"></td>
     <td><a th:href="@{'/create/' + ${product.id}}">Lägg till</a>
     <td><a th:href="@{'/update/' + ${product.id}}">uppdatera</a>
+
     </td>
     </tr>
   </table>
 </form>
 </body>
 </html>
-<a href="create">Skapa produkt</a>
-<p>
 <a href="varukorgen">Varukorgen</a></br>
 </p>
 <a href="/">Back to login page</a>
