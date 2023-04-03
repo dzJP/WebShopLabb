@@ -1,6 +1,8 @@
 package com.example.webshoplabb.ui;
 
 import com.example.webshoplabb.shop.Cart;
+import com.example.webshoplabb.shop.OrderItem;
+import com.example.webshoplabb.shop.Product;
 import com.example.webshoplabb.shop.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,8 +30,11 @@ public class ShopController {
         return "showpage";
     }
 
-
-
+    @GetMapping("/varukorgen")
+    public String showCart(Model m) {
+        m.addAttribute("cartList", service.getCart());
+        return "varukorgen";
+    }
 
     @PostMapping("/shop")
     public String getProduct(@RequestParam Long id, @RequestParam int amount, Model m) {
@@ -43,6 +48,7 @@ public class ShopController {
         m.addAttribute("productList", service.showShopProducts());
         return "shoppage";
     }
+
 
 
 
