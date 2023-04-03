@@ -5,6 +5,7 @@ import com.example.webshoplabb.storage.CustomerRepository;
 import com.example.webshoplabb.storage.ProductRepository;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -22,7 +23,6 @@ public class ShopService {
     ProductRepository productRepository;
     Customer customer;
     Product product;
-
     Cart cart;
 
     public ShopService() {
@@ -86,10 +86,13 @@ public class ShopService {
         return this.cart;
     }
 
+
     public Cart addToCart(Long id, int amount) {
+        Cart cart = new Cart();
         Product product = getByIdProduct(id);
+        if (cart == null) // check for null value
         cart.getCartList().add(new OrderItem(product,amount));
-        return cart;
+        return this.cart;
     }
 }
 

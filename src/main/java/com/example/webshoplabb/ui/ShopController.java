@@ -1,7 +1,11 @@
 package com.example.webshoplabb.ui;
 
+import com.example.webshoplabb.shop.Cart;
 import com.example.webshoplabb.shop.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
@@ -11,17 +15,22 @@ import org.springframework.web.bind.annotation.*;
 public class ShopController {
     @Autowired
     ShopService service;
+
+
     @PostMapping("/new")
     public String login(@RequestParam String name, String password, Model model) {
         model.addAttribute("customer", service.add(name, password));
         return "redirect:/";
     }
-
     @GetMapping("/allusers")
     public String getAll(Model m) {
         m.addAttribute("results", service.getAll());
         return "showpage";
     }
+
+
+
+
     @PostMapping("/shop")
     public String getProduct(@RequestParam Long id, @RequestParam int amount, Model m) {
         service.addToCart(id, amount);
@@ -35,11 +44,8 @@ public class ShopController {
         return "shoppage";
     }
 
-    @GetMapping("/varukorgen")
-    public String varukorgen(Model m) {
-        m.addAttribute("products", service.getCart());
-        return "varukorgen";
-    }
+
+
 
 //    @PostMapping("/create")
 //    public String create1(@RequestParam Long id, Model model) {

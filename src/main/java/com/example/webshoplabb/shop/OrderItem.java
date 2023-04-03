@@ -1,5 +1,6 @@
 package com.example.webshoplabb.shop;
 
+
 public class OrderItem {
 
     private Product product;
