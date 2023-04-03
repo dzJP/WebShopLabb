@@ -1,35 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Varukorg</title>
 </head>
-<body>
 <h1>Din varukorg</h1>
-<form>
-    <table border="1">
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Delete</th>
-        </tr>
-        <tr th:each="c : ${cart.cartItems}">
-            <td th:text="${product.getName}"></td>
-            <td th:text="${product.getPrice}"></td>
-            <td><a th:href="@{'/delete/' + ${product.id}}">radera</a>
-            </td>
-        </tr>
-    </table>
-</form>
-</body>
-<p>
-    <a href="/create">Lägg till egen produkt</a>
-</p>
-<p>
-    <a href="/shop">Back to Shop</a>
-</p>
+<body>
+<div th:each="product : ${productList}">
+    <span th:text="${product.getName}"></span>
+    <span th:text="${product.getPrice}"></span>
+<a href="/create">Lägg till egen produkt</a>
+<a href="/shop">Back to Shop</a>
 <a href="/">Back to Main Menu</a>
+</div>
+</body>
 </html>
-
 
 

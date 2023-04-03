@@ -1,12 +1,9 @@
 package com.example.webshoplabb.shop;
 
 
-import com.example.webshoplabb.shop.Cart;
-import com.example.webshoplabb.shop.Customer;
-import com.example.webshoplabb.shop.Product;
 import com.example.webshoplabb.storage.CustomerRepository;
 import com.example.webshoplabb.storage.ProductRepository;
-import org.aspectj.apache.bcel.generic.RET;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
@@ -31,62 +28,6 @@ public class ShopService {
     public ShopService() {
     }
 
-    public Product deleteProduct(int id) {
-        productRepository.findById(id);
-        productRepository.deleteById(id);
-        return product;
-    }
-
-    public void update(Product product) {
-        productRepository.save(product);
-    }
-
-    public Product findById(int id) {
-        Optional<Product> productOptional = productRepository.findById(id);
-        if (!productOptional.isPresent()) {
-            throw new RuntimeException("Product not found");
-        }
-        return productOptional.get();
-    }
-
-    public List <Product> getAllProducts() {
-        List<Product> products = new ArrayList<>();
-        for(Product product:productRepository.findAll()) {
-            products.add(product);
-        }
-        return products;
-    }
-
-    public List <Product> showProducts() {
-        productRepository.save(new Product(1,"Tacos",59.90));
-        productRepository.save(new Product(2,"Chicken",59.90));
-        productRepository.save(new Product(3,"Eggs",29.90));
-        productRepository.save(new Product(4,"Meat",59.90));
-        productRepository.save(new Product(5,"Candy",9.90));
-        productRepository.save(new Product(6,"Special",99.99));
-        return productRepository.findAll();
-    }
-
-    public void create(Product product) {
-        productRepository.save(product);
-    }
-
-    public List<Customer> getAll() {
-        return customerRepository.findAll();
-    }
-
-//    public List<Product> getAllProducts() {
-//        return productRepository.findAll();
-//    }
-
-    public Customer getById(long id) {
-        return customerRepository.findById(id).get();
-    }
-
-    public Product getByIdProduct(int id){
-        return productRepository.findById(id).get();
-    }
-
     public Customer add(String name, String password) {
         Optional<Customer> customer = customerRepository.findByName(name);
         if (customer.isEmpty()) {
@@ -97,13 +38,57 @@ public class ShopService {
         return this.customer;
     }
 
-    public Cart getCart() {
-        return cart;
+    public List <Product> showShopProducts() {
+        productRepository.save(new Product(1L,"Tacos",59.90));
+        productRepository.save(new Product(2L,"Chicken",59.90));
+        productRepository.save(new Product(3L,"Eggs",29.90));
+        productRepository.save(new Product(4L,"Meat",59.90));
+        productRepository.save(new Product(5L,"Candy",9.90));
+        productRepository.save(new Product(6L,"Special",99.99));
+        return productRepository.findAll();
     }
 
+    public Product deleteProduct(Long id) {
+        productRepository.findById(id);
+        productRepository.deleteById(id);
+        return product;
+    }
 
-    public Cart addToCart(int id) {
+    public void update(Product product) {
+        productRepository.save(product);
+    }
 
+    public Product findById(Long id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (!productOptional.isPresent()) {
+            throw new RuntimeException("Product not found");
+        }
+        return productOptional.get();
+    }
+
+    public void create(Product product) {
+        productRepository.save(product);
+    }
+
+    public List<Customer> getAll() {
+        return customerRepository.findAll();
+    }
+
+    public Customer getById(long id) {
+        return customerRepository.findById(id).get();
+    }
+
+    public Product getByIdProduct(Long id){
+        return productRepository.findById(id).get();
+    }
+
+    public Cart getCart() {
+        return this.cart;
+    }
+
+    public Cart addToCart(Long id, int amount) {
+        Product product = getByIdProduct(id);
+        cart.getCartList().add(new OrderItem(product,amount));
         return cart;
     }
 }

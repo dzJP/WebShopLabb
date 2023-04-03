@@ -4,21 +4,14 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-@Entity(name = "customer")
-@Table
+@Entity
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "password")
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Product> products;
     public Customer() {
     }
     public Customer(String name, String password) {
@@ -45,15 +38,4 @@ public class Customer {
         this.password = password;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public void addProduct(Product product) {
-        products.add(product);
-    }
 }

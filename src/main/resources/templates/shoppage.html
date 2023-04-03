@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Webshop</title>
+</head>
+<h1>Produkter</h1>
+<body>
+<div th:each="product : ${productList}">
+  <span th:text="${product.getName}"></span>
+  <span th:text="${product.getPrice}"></span>
+  <form action="/shop" method="post">
+    <input type="hidden" name="id" th:value="${product.id}">
+    <input type="text" name="amount" value="1">
+    <input type="submit" value="Add">
+
+  </form>
+</div>
+<a href="/varukorgen">Varukorgen</a></br>
+</p>
+<a href="/">Back to login page</a>
+</body>
+</html>
