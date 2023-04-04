@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create product</title>
+</head>
+<body>
+<h1>Create your own product</h1>
+<form th:action="@{/newproduct}" method="post" th:object="${product}">
+  <p th:text="${productmessage}"><p/>
+    Name: <input type="text" th:field="*{name}"/> </br>
+    Price: <input type="text" th:field="*{price}"/>
+    <input type="submit" value="New Product">
+  </form>
+</body>
+</html>

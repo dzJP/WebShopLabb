@@ -5,7 +5,7 @@
     <title>List of customers</title>
 </head>
 <body>
-<div th:each="customer: ${results}">
+<div th:each="customer: ${showallcustomers}">
   <h2 th:text="${customer.getName}"></h2>
 </div>
 <p>

@@ -3,13 +3,10 @@ package com.example.webshoplabb.shop;
 
 import com.example.webshoplabb.storage.CustomerRepository;
 import com.example.webshoplabb.storage.ProductRepository;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +25,14 @@ public class ShopService {
     public ShopService() {
     }
 
+    public Cart addToCart(Long id, int amount) {
+        Cart cart = new Cart();
+        Product product = getByIdProduct(id);
+        if (cart == null) // checks for null value
+            cart.getCartList().add(new OrderItem(product, amount));
+        return cart;
+    }
+
     public Customer add(String name, String password) {
         Optional<Customer> customer = customerRepository.findByName(name);
         if (customer.isEmpty()) {
@@ -38,14 +43,32 @@ public class ShopService {
         return this.customer;
     }
 
-    public List <Product> showShopProducts() {
-        productRepository.save(new Product(1L,"Tacos",59.90));
-        productRepository.save(new Product(2L,"Chicken",59.90));
-        productRepository.save(new Product(3L,"Eggs",29.90));
-        productRepository.save(new Product(4L,"Meat",59.90));
-        productRepository.save(new Product(5L,"Candy",9.90));
-        productRepository.save(new Product(6L,"Special",99.99));
+    public Product addProduct(String name, double price) {
+        Optional<Product> product = productRepository.findByName(name);
+        if (product.isEmpty()) {
+            this.product = productRepository.save(new Product(name, price));
+        } else {
+            this.product = product.get();
+        }
+        return this.product;
+    }
+
+    public void createProduct(Product product) {
+        productRepository.save(product);
+    }
+
+    public List<Product> showProductsInStore() {
+        productRepository.save(new Product(1L, "Tacos", 59.90));
+        productRepository.save(new Product(2L, "Chicken", 59.90));
+        productRepository.save(new Product(3L, "Eggs", 29.90));
+        productRepository.save(new Product(4L, "Meat", 59.90));
+        productRepository.save(new Product(5L, "Candy", 9.90));
+        productRepository.save(new Product(6L, "Special", 99.99));
         return productRepository.findAll();
+    }
+
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
     }
 
     public Product deleteProduct(Long id) {
@@ -66,33 +89,19 @@ public class ShopService {
         return productOptional.get();
     }
 
-    public void create(Product product) {
-        productRepository.save(product);
-    }
-
-    public List<Customer> getAll() {
-        return customerRepository.findAll();
-    }
-
-    public Customer getById(long id) {
-        return customerRepository.findById(id).get();
-    }
-
-    public Product getByIdProduct(Long id){
-        return productRepository.findById(id).get();
-    }
-
     public Cart getCart() {
         return this.cart;
     }
 
-
-    public Cart addToCart(Long id, int amount) {
-        Cart cart = new Cart();
-        Product product = getByIdProduct(id);
-        if (cart == null) // check for null value
-        cart.getCartList().add(new OrderItem(product,amount));
-        return this.cart;
+    public Customer getByIdCustomer(long id) {
+        return customerRepository.findById(id).get();
     }
+
+    public Product getByIdProduct(Long id) {
+        return productRepository.findById(id).get();
+    }
+
+
+
 }
 

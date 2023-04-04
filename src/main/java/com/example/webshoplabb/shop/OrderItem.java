@@ -1,8 +1,8 @@
 package com.example.webshoplabb.shop;
 
+import jakarta.persistence.Entity;
 
 public class OrderItem {
-
     private Product product;
     private int amount;
 

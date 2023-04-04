@@ -1,15 +1,9 @@
 package com.example.webshoplabb.ui;
 
-import com.example.webshoplabb.shop.Cart;
-import com.example.webshoplabb.shop.OrderItem;
 import com.example.webshoplabb.shop.Product;
 import com.example.webshoplabb.shop.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,38 +12,56 @@ public class ShopController {
     @Autowired
     ShopService service;
 
-
-    @PostMapping("/new")
+    @PostMapping("/createnewuser") // creates a new user
     public String login(@RequestParam String name, String password, Model model) {
         model.addAttribute("customer", service.add(name, password));
         return "redirect:/";
     }
-    @GetMapping("/allusers")
-    public String getAll(Model m) {
-        m.addAttribute("results", service.getAll());
-        return "showpage";
+
+    @GetMapping("/showallcustomers") // shows a page of all customers in database
+    public String getAllCustomers(Model m) {
+        m.addAttribute("showallcustomers", service.getAllCustomers());
+        return "showallcustomerspage";
     }
 
-    @GetMapping("/varukorgen")
-    public String showCart(Model m) {
-        m.addAttribute("cartList", service.getCart());
-        return "varukorgen";
+    @PostMapping("/newproduct") // creates a new product
+    String addNewProduct(@RequestParam String name, double price,  Model model) {
+        model.addAttribute("product", service.addProduct(name, price));
+        return "redirect:/";
     }
 
-    @PostMapping("/shop")
-    public String getProduct(@RequestParam Long id, @RequestParam int amount, Model m) {
-        service.addToCart(id, amount);
-        m.addAttribute("productList", service.showShopProducts());
-        return "shoppage";
+    @GetMapping("/newproduct") // returns the new product
+    String addNewForm(Model m) {
+        m.addAttribute("product", new Product());
+        return "createnewproductpage";
     }
+
 
     @GetMapping("/shopproducts")
     public String getProductsInShop(Model m) {
-        m.addAttribute("productList", service.showShopProducts());
-        return "shoppage";
+        m.addAttribute("productList", service.showProductsInStore());
+        return "showshoppage";
     }
 
+    @PostMapping("/addToCart")
+    public String addToCart(@RequestParam Long id, @RequestParam int amount, Model m) {
+        service.addToCart(id, amount);
+        m.addAttribute("productList", service.showProductsInStore());
+        return "showshoppage";
+    }
 
+    @GetMapping("/addToCart")
+    public String addedProductInCart(@RequestParam long id, Model model) {
+        Product p = service.getByIdProduct(id);
+        model.addAttribute("product", p);
+        return "showcartpage";
+    }
+
+    @GetMapping("/showcartpage")
+    public String varukorgen(Model m) {
+        m.addAttribute("cart",service.getCart());
+        return "showcartpage";
+    }
 
 
 
