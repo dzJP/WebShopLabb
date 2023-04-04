@@ -25,14 +25,6 @@ public class ShopService {
     public ShopService() {
     }
 
-    public Cart addToCart(Long id, int amount) {
-        Cart cart = new Cart();
-        Product product = getByIdProduct(id);
-        if (cart == null) // checks for null value
-            cart.getCartList().add(new OrderItem(product, amount));
-        return cart;
-    }
-
     public Customer add(String name, String password) {
         Optional<Customer> customer = customerRepository.findByName(name);
         if (customer.isEmpty()) {
@@ -53,17 +45,18 @@ public class ShopService {
         return this.product;
     }
 
-    public void createProduct(Product product) {
-        productRepository.save(product);
+    public Cart addToCart(Long id, int amount) {
+        Cart cart = new Cart();
+        Product product = getByIdProduct(id);
+        if (cart == null) // checks for null value
+            cart.getCartList().add(new OrderItem(product, amount));
+        return cart;
     }
 
     public List<Product> showProductsInStore() {
-        productRepository.save(new Product(1L, "Tacos", 59.90));
-        productRepository.save(new Product(2L, "Chicken", 59.90));
-        productRepository.save(new Product(3L, "Eggs", 29.90));
-        productRepository.save(new Product(4L, "Meat", 59.90));
-        productRepository.save(new Product(5L, "Candy", 9.90));
-        productRepository.save(new Product(6L, "Special", 99.99));
+        productRepository.save(new Product(1L, "TestItem1", 10));
+        productRepository.save(new Product(2L, "TestItem2", 20));
+        productRepository.save(new Product(3L, "TestItem3", 30));
         return productRepository.findAll();
     }
 
@@ -100,8 +93,5 @@ public class ShopService {
     public Product getByIdProduct(Long id) {
         return productRepository.findById(id).get();
     }
-
-
-
 }
 

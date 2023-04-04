@@ -6,13 +6,13 @@
 </head>
 <body>
 <h1>Din varukorg</h1>
-<div th:each="cart: ${cartList}">
-    Name:<p th:text="${orderitem.product.Getname}"></p>
-    Price:<p th:text="${orderitem.product.Getprice}"></p>
-    Amount:<p th:text="${orderitem.Getamount}"></p>
+<div th:each="cart: ${mycart}">
+    Name:<p th:text="${cart.product.name}"></p>
+<!--    Price:<p th:text="${cart.product.price}"></p>-->
+<!--    Amount:<p th:text="${cart.amount}"></p>-->
 </div>
-<a href="/create">Lägg till egen produkt</a>
-<a href="/shop">Back to Shop</a>
+<a href="/newproduct">Create your own product</a>
+<a href="/shopproducts">Back to Shop page</a>
 <a href="/">Back to Main Menu</a>
 </div>
 </body>
