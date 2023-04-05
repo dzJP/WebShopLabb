@@ -6,13 +6,16 @@
 </head>
 <body>
 <h1>Din varukorg</h1>
-<div th:each="cart: ${mycart}">
-    Name:<p th:text="${cart.product.name}"></p>
-<!--    Price:<p th:text="${cart.product.price}"></p>-->
-<!--    Amount:<p th:text="${cart.amount}"></p>-->
+<div th:each="item, loopInfo: ${mycart.cartList}">
+    Name:<p th:text="${item.product.name}"></p>
+    Price:<p th:text="${item.product.price}"></p>
+    Amount:<p th:text="${item.amount}"></p>
+    <form action="adjust" method="post">
+        <input type="submit" name="cartIndex" th:value="${loopInfo.index}"/>
+    </form>
 </div>
 <a href="/newproduct">Create your own product</a>
-<a href="/shopproducts">Back to Shop page</a>
+<a href="/shop-products">Back to Shop page</a>
 <a href="/">Back to Main Menu</a>
 </div>
 </body>

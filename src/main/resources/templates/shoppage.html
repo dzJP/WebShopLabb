@@ -6,20 +6,21 @@
 </head>
 <h1>Produkter</h1>
 <body>
+<h2>These are the current products in the store</h2></br>
 <div th:each="product : ${productList}">
-  <span th:text="${product.getName}"></span>
-  <span th:text="${product.getPrice}"></span>
-  <form action="/addToCart" method="post">
+  <span th:text="${product.name}"></span>
+  <span th:text="${product.price}"></span>
+  <form action="/shop-products" method="post">
     <input type="hidden" name="id" th:value="${product.id}">
     Amount:<input type="text" name="amount" value="1">
     <input type="submit" value="Add">
-
   </form>
 </div>
-<a href="/showcartpage">Show cart</a></br>
 <p>
-<a  href="/newproduct">Create your own product</a>
+  <h2><a  href="/newproduct">Create your own product</a></h2>
 </p>
+<a href="/showcart">Show cart</a></br>
+
 <a href="/">Back to login page</a>
 </body>
 </html>

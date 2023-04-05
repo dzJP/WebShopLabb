@@ -10,8 +10,6 @@ public class OrderItem {
         this.product = product;
         this.amount = amount;
     }
-
-
     public OrderItem() {}
 
     public Product getProduct() {

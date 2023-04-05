@@ -20,49 +20,40 @@ public class ShopService {
     ProductRepository productRepository;
     Customer customer;
     Product product;
-    Cart cart;
+    Cart cart = new Cart();
 
     public ShopService() {
     }
-
     public Customer add(String name, String password) {
         Optional<Customer> customer = customerRepository.findByName(name);
-        if (customer.isEmpty()) {
-            this.customer = customerRepository.save(new Customer(name, password));
-        } else {
-            this.customer = customer.get();
-        }
+        customerRepository.save(new Customer(name, password));
         return this.customer;
     }
-
     public Product addProduct(String name, double price) {
         Optional<Product> product = productRepository.findByName(name);
-        if (product.isEmpty()) {
-            this.product = productRepository.save(new Product(name, price));
-        } else {
-            this.product = product.get();
-        }
+        productRepository.save(new Product(name, price));
         return this.product;
     }
-
-    public Cart addToCart(Long id, int amount) {
-        Cart cart = new Cart();
+    public void addToCart(Long id, int amount) {
         Product product = getByIdProduct(id);
-        if (cart == null) // checks for null value
             cart.getCartList().add(new OrderItem(product, amount));
-        return cart;
+    }
+
+    public Cart getCart() {
+        return this.cart;
     }
 
     public List<Product> showProductsInStore() {
-        productRepository.save(new Product(1L, "TestItem1", 10));
-        productRepository.save(new Product(2L, "TestItem2", 20));
-        productRepository.save(new Product(3L, "TestItem3", 30));
+        productRepository.save(new Product(1L, "ProductExample1", 1));
+        productRepository.save(new Product(2L, "ProductExample2", 2));
+        productRepository.save(new Product(3L, "ProductExample3", 3));
         return productRepository.findAll();
     }
 
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
     }
+
 
     public Product deleteProduct(Long id) {
         productRepository.findById(id);
@@ -82,9 +73,7 @@ public class ShopService {
         return productOptional.get();
     }
 
-    public Cart getCart() {
-        return this.cart;
-    }
+
 
     public Customer getByIdCustomer(long id) {
         return customerRepository.findById(id).get();
@@ -94,4 +83,24 @@ public class ShopService {
         return productRepository.findById(id).get();
     }
 }
+
+//    public Customer add(String name, String password) {
+//        Optional<Customer> customer = customerRepository.findByName(name);
+//        if (customer.isEmpty()) {
+//            this.customer = customerRepository.save(new Customer(name, password));
+//        } else {
+//            this.customer = customer.get();
+//        }
+//        return this.customer;
+//    }
+
+//    public Product addProduct(String name, double price) {
+//        Optional<Product> product = productRepository.findByName(name);
+//        if (product.isEmpty()) {
+//            this.product = productRepository.save(new Product(name, price));
+//        } else {
+//            this.product = product.get();
+//        }
+//        return this.product;
+//    }
 

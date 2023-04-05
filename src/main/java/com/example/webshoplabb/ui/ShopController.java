@@ -1,11 +1,16 @@
 package com.example.webshoplabb.ui;
 
+import com.example.webshoplabb.shop.Cart;
+import com.example.webshoplabb.shop.OrderItem;
 import com.example.webshoplabb.shop.Product;
 import com.example.webshoplabb.shop.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ShopController {
@@ -29,21 +34,21 @@ public class ShopController {
     @GetMapping("/newproduct")
     String addNewForm(Model m) {
         m.addAttribute("product", new Product());
-        return "createnewproductpage";
+        return "newproductpage";
     }
-    @GetMapping("/shopproducts")
+    @GetMapping("/shop-products")
     public String getProductsInShop(Model m) {
         m.addAttribute("productList", service.showProductsInStore());
-        return "showshoppage";
+        return "shoppage";
     }
-    @PostMapping("/addToCart")
+    @PostMapping("/shop-products")
     public String addToCart(@RequestParam Long id, @RequestParam int amount, Model m) {
         service.addToCart(id, amount);
         m.addAttribute("productList", service.showProductsInStore());
-        return "showshoppage";
+        return "shoppage";
     }
-    @GetMapping("/showcartpage")
-    public String varukorgen(Model m) {
+    @GetMapping("/showcart")
+    public String showCartPage(Model m) {
         m.addAttribute("mycart",service.getCart());
         return "showcartpage";
     }
