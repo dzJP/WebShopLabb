@@ -6,6 +6,7 @@ import com.example.webshoplabb.shop.Product;
 import com.example.webshoplabb.shop.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,22 @@ public class ShopController {
         m.addAttribute("mycart",service.getCart());
         return "showcartpage";
     }
+
+    @PostMapping("/removeproductfromcart")
+    public String removeProductFromCart(Model m) {
+        service.deleteProduct();
+        m.addAttribute("mycart", service.getCart());
+        return "showcartpage";
+    }
+
+    @GetMapping("/place-order")
+    public String addOrder(Model m) {
+        service.addOrder();
+        m.addAttribute("mycart", service.getCart());
+        return "addorderpage";
+    }
+
+
 
 
 //    @GetMapping("/delete/{id}")

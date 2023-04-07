@@ -7,17 +7,19 @@
 <body>
 <h1>Din varukorg</h1>
 <div th:each="item, loopInfo: ${mycart.cartList}">
-    Name:<p th:text="${item.product.name}"></p>
-    Price:<p th:text="${item.product.price}"></p>
-    Amount:<p th:text="${item.amount}"></p>
-    <form action="adjust" method="post">
-        <input type="submit" name="cartIndex" th:value="${loopInfo.index}"/>
+    Name:<span th:text="${item.product.name}"></span>
+    Price:<span th:text="${item.product.price}"></span>
+    Amount:<span th:text="${item.amount}"></span>
+    <form action="/removeproductfromcart" method="post">
+        <input type="hidden" name="itemIndex" th:value="${loopInfo.index}"/>
+        <input name="removeItem" type="submit" value="Remove Product"/>
     </form>
 </div>
-<a href="/newproduct">Create your own product</a>
+
+<!--<a href="/newproduct">Create your own product</a>-->
+<h3><a href="/place-order">Place order</a></h3>
 <a href="/shop-products">Back to Shop page</a>
 <a href="/">Back to Main Menu</a>
-</div>
 </body>
 </html>
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Varukorg</title>
+</head>
+<body>
+<h1>Din varukorg</h1>
+<div th:each="item, loopInfo: ${mycart.cartList}">
+  Name:<span th:text="${item.product.name}"></span>
+  Price:<span th:text="${item.product.price}"></span>
+  Amount:<span th:text="${item.amount}"></span>
+  <form action="/addOrder" method="post">
+    <input type="hidden" name="itemIndex" th:value="${loopInfo.index}"/>
+  </form>
+  <a href="place-order">Place order</a>
+  <a href="/">Back to Main Menu</a>
+
+</div>
+</body>
+</html>
+
+

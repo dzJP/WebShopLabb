@@ -3,6 +3,7 @@ package com.example.webshoplabb.shop;
 
 import com.example.webshoplabb.storage.CustomerRepository;
 import com.example.webshoplabb.storage.ProductRepository;
+import jakarta.persistence.criteria.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
@@ -39,14 +40,24 @@ public class ShopService {
             cart.getCartList().add(new OrderItem(product, amount));
     }
 
+
+    public void deleteProduct() {
+        cart.getCartList().remove(0);
+    }
+//    public OrderItem deleteProduct(OrderItem orderItem) {
+//        cart.getCartList().remove(orderItem);
+//        return orderItem;
+//    }
     public Cart getCart() {
         return this.cart;
     }
 
     public List<Product> showProductsInStore() {
-        productRepository.save(new Product(1L, "ProductExample1", 1));
-        productRepository.save(new Product(2L, "ProductExample2", 2));
-        productRepository.save(new Product(3L, "ProductExample3", 3));
+        productRepository.save(new Product(1L, "Chicken", 50));
+        productRepository.save(new Product(2L, "Beef", 60));
+        productRepository.save(new Product(3L, "Fish", 70));
+        productRepository.save(new Product(3L, "Apple", 10));
+        productRepository.save(new Product(3L, "Banana", 5));
         return productRepository.findAll();
     }
 
@@ -55,11 +66,7 @@ public class ShopService {
     }
 
 
-    public Product deleteProduct(Long id) {
-        productRepository.findById(id);
-        productRepository.deleteById(id);
-        return product;
-    }
+
 
     public void update(Product product) {
         productRepository.save(product);
@@ -81,6 +88,10 @@ public class ShopService {
 
     public Product getByIdProduct(Long id) {
         return productRepository.findById(id).get();
+    }
+
+
+    public void addOrder() {
     }
 }
 
