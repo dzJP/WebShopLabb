@@ -5,7 +5,8 @@
   <title>Varukorg</title>
 </head>
 <body>
-<h1>Din varukorg</h1>
+<h1>Thank you for shopping</h1>
+<h3>You have bought: </h3>
 <div th:each="item, loopInfo: ${mycart.cartList}">
   Name:<span th:text="${item.product.name}"></span>
   Price:<span th:text="${item.product.price}"></span>
@@ -13,7 +14,6 @@
   <form action="/addOrder" method="post">
     <input type="hidden" name="itemIndex" th:value="${loopInfo.index}"/>
   </form>
-  <a href="place-order">Place order</a>
   <a href="/">Back to Main Menu</a>
 
 </div>

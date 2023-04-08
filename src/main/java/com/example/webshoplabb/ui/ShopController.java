@@ -61,7 +61,7 @@ public class ShopController {
         return "showcartpage";
     }
 
-    @GetMapping("/place-order")
+    @GetMapping("/order")
     public String addOrder(Model m) {
         service.addOrder();
         m.addAttribute("mycart", service.getCart());
