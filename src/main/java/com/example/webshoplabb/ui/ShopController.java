@@ -1,17 +1,11 @@
 package com.example.webshoplabb.ui;
 
-import com.example.webshoplabb.shop.Cart;
-import com.example.webshoplabb.shop.OrderItem;
 import com.example.webshoplabb.shop.Product;
 import com.example.webshoplabb.shop.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class ShopController {
@@ -27,6 +21,12 @@ public class ShopController {
         m.addAttribute("showallcustomers", service.getAllCustomers());
         return "showallcustomerspage";
     }
+    @PostMapping("/findproducts")
+    public String findProductsByName(Model m, @RequestParam String productName) {
+        m.addAttribute("productList", service.getByNameProduct(productName));
+        return "showfoundproductspage";
+    }
+
     @PostMapping("/newproduct") // creates a new product
     String addNewProduct(@RequestParam String name, double price,  Model model) {
         model.addAttribute("product", service.addProduct(name, price));
@@ -37,6 +37,7 @@ public class ShopController {
         m.addAttribute("product", new Product());
         return "newproductpage";
     }
+
     @GetMapping("/shop-products")
     public String getProductsInShop(Model m) {
         m.addAttribute("productList", service.showProductsInStore());
@@ -53,50 +54,16 @@ public class ShopController {
         m.addAttribute("mycart",service.getCart());
         return "showcartpage";
     }
-
     @PostMapping("/removeproductfromcart")
     public String removeProductFromCart(Model m) {
         service.deleteProduct();
         m.addAttribute("mycart", service.getCart());
         return "showcartpage";
     }
-
-    @GetMapping("/order")
+    @PostMapping("/order")
     public String addOrder(Model m) {
         service.addOrder();
         m.addAttribute("mycart", service.getCart());
         return "addorderpage";
     }
-
-
-
-
-//    @GetMapping("/delete/{id}")
-//    public String deleteProduct(@PathVariable int id,Model m) {
-//        m.addAttribute("id", shopService.deleteProduct(id));
-//        return "redirect:/varukorgen";
-//    }
-//    @GetMapping("/update/{id}")
-//    public String update(@PathVariable("id") int id, Model model){
-//        model.addAttribute("product", shopService.findById(id));
-//        return "redirect:/";
-//    }
-//    @GetMapping("/delete{id}")
-//    public String deleteProduct(@PathVariable("id") int id) {
-//        shopService.deleteProduct(id);
-//        return "redirect:/";
-//    }
-
-    //    @GetMapping("/create/1")
-//    public String createItemOne(Model m) {
-//        m.addAttribute("results", shopService.getAll());
-//        return "redirect:/shop";
-//    }
-//
-//    @PostMapping("/create/1")
-//    public String create1(@RequestParam int id,Model model) {
-//        model.addAttribute("product", shopService.addToCart(id));
-//        return "redirect:/shop";
-//    }
-
 }

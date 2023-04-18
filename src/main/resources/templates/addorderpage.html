@@ -5,18 +5,18 @@
   <title>Varukorg</title>
 </head>
 <body>
-<h1>Thank you for shopping</h1>
-<h3>You have bought: </h3>
+<h1>Order List</h1>
+<h3>Thank you for shopping.</h3>
 <div th:each="item, loopInfo: ${mycart.cartList}">
   Name:<span th:text="${item.product.name}"></span>
   Price:<span th:text="${item.product.price}"></span>
   Amount:<span th:text="${item.amount}"></span>
-  <form action="/addOrder" method="post">
-    <input type="hidden" name="itemIndex" th:value="${loopInfo.index}"/>
-  </form>
-  <a href="/">Back to Main Menu</a>
-
+  Total cost:<span th:text="${item.sum}"></span>
+<!--  <form action="/addOrder" method="post">-->
+<!--    <input type="hidden" name="itemIndex" th:value="${loopInfo.index}"/>-->
+<!--  </form>-->
 </div>
+<a href="/">Back to Main Menu</a>
 </body>
 </html>
 
