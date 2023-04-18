@@ -13,21 +13,10 @@ public class OrderItem {
     private Product product;
     private int amount;
 
-    double sum = 20.0;
-
-    public double getSum() {
-        return sum;
-    }
-
-    public void setSum(double sum) {
-        this.sum = sum;
-    }
-
     public OrderItem(Product product, int amount) {
         this.product = product;
         this.amount = amount;
     }
-
 
     public OrderItem() {}
 

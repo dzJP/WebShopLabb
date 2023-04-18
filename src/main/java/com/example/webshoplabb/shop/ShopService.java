@@ -45,6 +45,7 @@ public class ShopService {
         cart.getCartList().remove(0);
     }
 
+
     public Product findById(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
         if (!productOptional.isPresent()) {
