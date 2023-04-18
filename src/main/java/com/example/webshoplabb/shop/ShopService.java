@@ -2,6 +2,7 @@ package com.example.webshoplabb.shop;
 
 
 import com.example.webshoplabb.storage.CustomerRepository;
+import com.example.webshoplabb.storage.OrderRepository;
 import com.example.webshoplabb.storage.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,12 @@ public class ShopService {
     CustomerRepository customerRepository;
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    OrderRepository orderRepository;
     Customer customer;
     Product product;
     Cart cart = new Cart();
-    List<OrderItem> orderItemList;
+    CustomerOrder customerOrder = new CustomerOrder();
 
     public ShopService() {}
     public void addOrder() {}
@@ -41,11 +44,24 @@ public class ShopService {
         Product product = getByIdProduct(id);
             cart.getCartList().add(new OrderItem(product, amount));
     }
+    public void addIntoOrder() {
+        customer.addOrder(new CustomerOrder(getCart().getCartList(),customer));
+        customer = customerRepository.save(customer);
+    }
+    public void saveOrder(CustomerOrder customerOrder) {
+        customerOrder = orderRepository.save(customerOrder);
+    }
+    public List<Product> showProductsInStore() {
+        productRepository.save(new Product(1L, "Chicken", 50));
+        productRepository.save(new Product(2L, "Beef", 60));
+        productRepository.save(new Product(3L, "Fish", 70));
+        productRepository.save(new Product(4L, "Apple", 10));
+        productRepository.save(new Product(5L, "Banana", 5));
+        return productRepository.findAll();
+    }
     public void deleteProduct() {
         cart.getCartList().remove(0);
     }
-
-
     public Product findById(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
         if (!productOptional.isPresent()) {
@@ -74,19 +90,15 @@ public class ShopService {
         return customerRepository.findAll();
     }
 
-    public List<Product> showProductsInStore() {
-        productRepository.save(new Product(1L, "Chicken", 50));
-        productRepository.save(new Product(2L, "Beef", 60));
-        productRepository.save(new Product(3L, "Fish", 70));
-        productRepository.save(new Product(4L, "Apple", 10));
-        productRepository.save(new Product(5L, "Banana", 5));
-        return productRepository.findAll();
-    }
-
-
-
     public Cart getCart() {
         return this.cart;
+    }
+    public List<CustomerOrder> getCustomerOrders() {
+        return customer.getCustomerOrders();
+    }
+
+    public CustomerOrder getCustomerOrder() {
+        return customerOrder;
     }
 
 }

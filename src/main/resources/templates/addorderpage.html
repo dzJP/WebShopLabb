@@ -6,16 +6,16 @@
 </head>
 <body>
 <h1>Order List</h1>
-<h3>Thank you for shopping.</h3>
+You have bought:
 <div th:each="item, loopInfo: ${mycart.cartList}">
   Name:<span th:text="${item.product.name}"></span>
-  Price:<span th:text="${item.product.price}"></span>
   Amount:<span th:text="${item.amount}"></span>
-<!--  <form action="/addOrder" method="post">-->
-<!--    <input type="hidden" name="itemIndex" th:value="${loopInfo.index}"/>-->
-<!--  </form>-->
 </div>
+For a total of:
+<td th:text="${totalpriceofallproducts}"></td>
+<p>
 <a href="/">Back to Main Menu</a>
+</p>
 </body>
 </html>
 

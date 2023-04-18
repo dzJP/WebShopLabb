@@ -11,12 +11,17 @@ public class Customer {
     private Long id;
     private String name;
     private String password;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<CustomerOrder> customerOrders;
 
     public Customer() {
     }
     public Customer(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+    public void addOrder(CustomerOrder customerOrder){
+        customerOrders.add(customerOrder);
     }
 
     public Long getId() {
@@ -36,6 +41,12 @@ public class Customer {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public List<CustomerOrder> getCustomerOrders() {
+        return customerOrders;
+    }
+    public void setCustomerOrders(List<CustomerOrder> customerOrders) {
+        this.customerOrders = customerOrders;
     }
 
 }

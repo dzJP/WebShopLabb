@@ -1,17 +1,18 @@
 package com.example.webshoplabb.shop;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.List;
 
-
+@Entity
 public class OrderItem {
 
-    List<OrderItem> orderItemList;
+    @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
     private int amount;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     public OrderItem(Product product, int amount) {
         this.product = product;
@@ -19,6 +20,14 @@ public class OrderItem {
     }
 
     public OrderItem() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Product getProduct() {
         return product;

@@ -52,7 +52,7 @@ public class ShopController {
     @GetMapping("/showcart")
     public String showCartPage(Model m) {
         m.addAttribute("mycart",service.getCart());
-        m.addAttribute("amount", service.getCart().getTotalCostOfProductsInCart());
+        m.addAttribute("totalpriceofallproducts", service.getCart().getTotalCostOfProductsInCart());
         return "showcartpage";
     }
     @PostMapping("/removeproductfromcart")
@@ -65,6 +65,7 @@ public class ShopController {
     public String addOrder(Model m) {
         service.addOrder();
         m.addAttribute("mycart", service.getCart());
+        m.addAttribute("totalpriceofallproducts", service.getCart().getTotalCostOfProductsInCart());
         return "addorderpage";
     }
 }
