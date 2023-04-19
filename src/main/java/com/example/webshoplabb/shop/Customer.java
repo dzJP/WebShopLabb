@@ -27,6 +27,7 @@ public class Customer {
         this.name = name;
         this.password = password;
         this.admin = admin;
+        this.customerOrders = new ArrayList<>();
     }
     public Customer(Long id, List<CustomerOrder> customerOrders) {
         this.id = id;

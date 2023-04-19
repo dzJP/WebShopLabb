@@ -14,7 +14,7 @@ public class ShopController {
     @Autowired
     ShopService service;
 
-    @PostMapping("/createnewuser") // creates a new user and adds it into the database
+    @PostMapping("/createnewuser") // create a new user with admin privilegies
     public String createNewUser(@RequestParam String name, @RequestParam String password, @RequestParam(value = "admin", required = false)Boolean admin, Model model) {
         if (admin == null) {
             admin = false;
