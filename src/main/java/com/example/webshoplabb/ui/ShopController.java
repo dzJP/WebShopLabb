@@ -7,14 +7,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ShopController {
     @Autowired
     ShopService service;
-    @PostMapping("/createnewuser") // creates a new user
-    public String login(@RequestParam String name, String password, Model model) {
-        model.addAttribute("customer", service.add(name, password));
+
+    @PostMapping("/createnewuser") // creates a new user and adds it into the database
+    public String createNewUser(@RequestParam String name, @RequestParam String password, Model model) {
+        model.addAttribute("customer", service.addNewUser(name, password));
+        return "redirect:/";
+    }
+    @PostMapping("/login") // log in as an existing user
+    public String login(@RequestParam String name, @RequestParam String password, Model model) {
+        model.addAttribute("customer",service.login(name,password));
         return "redirect:/";
     }
     @GetMapping("/showallcustomers") // shows a page of all customers in database
@@ -22,13 +29,13 @@ public class ShopController {
         m.addAttribute("showallcustomers", service.getAllCustomers());
         return "showallcustomerspage";
     }
-    @PostMapping("/findproducts")
+    @PostMapping("/findproducts") // shows a page where we can search for a product in the database
     public String findProductsByName(Model m, @RequestParam String productName) {
         m.addAttribute("productList", service.getByNameProduct(productName));
         return "showfoundproductspage";
     }
 
-    @PostMapping("/newproduct") // creates a new product
+    @PostMapping("/newproduct") // creates a new product and adds it into list of products in database
     String addNewProduct(@RequestParam String name, double price,  Model model) {
         model.addAttribute("product", service.addProduct(name, price));
         return "redirect:/";
@@ -49,32 +56,24 @@ public class ShopController {
         m.addAttribute("productList", service.showProductsInStore());
         return "shoppage";
     }
-    @GetMapping("/showcart")
+    @GetMapping("/showcart") // shows current cart with total sum of products
     public String showCartPage(Model m) {
         m.addAttribute("mycart",service.getCart());
         m.addAttribute("totalpriceofallproducts", service.getCart().getTotalCostOfProductsInCart());
         return "showcartpage";
     }
-    @PostMapping("/removeproductfromcart")
+    @PostMapping("/removeproductfromcart") // removes an item from the cart
     public String removeProductFromCart(Model m) {
         service.deleteProduct();
         m.addAttribute("mycart", service.getCart());
         return "showcartpage";
     }
-    @PostMapping("/order")
+    @PostMapping("/order") // creates an order from cart
     public String addOrder(Model m) {
-        service.addOrder();
+        service.createOrderFromCart();
         m.addAttribute("myorder", service.getCart());
         m.addAttribute("totalpriceofallproducts", service.getCart().getTotalCostOfProductsInCart());
         return "addorderpage";
     }
-
-//    @PostMapping("/order")
-//    public String addOrder(Model m) {
-//        service.addToOrder();
-//        m.addAttribute("myorder", service.getCustomerOrder());
-//        return "addorderpage";
-//    }
-
 
 }

@@ -25,16 +25,29 @@ public class ShopService {
     Product product;
     Customer customer;
     CustomerOrder customerOrder;
+
     Cart cart = new Cart();
-
-
     public ShopService() {}
-    public void addOrder() {}
 
-    public Customer add(String name, String password) {
-        Optional<Customer> customer = customerRepository.findByName(name);
-        customerRepository.save(new Customer(name, password));
-        return this.customer;
+    public Customer addNewUser(String name, String password) {
+        Optional<Customer> customerOptional = customerRepository.findByName(name);
+        if (customerOptional != customerRepository.findByName(name))
+            System.out.println("This user already exists.");
+        else {
+            customer = customerRepository.save(new Customer(name, password));
+            System.out.println("User saved successfully.");
+        }
+        return customer;
+    }
+
+    public Customer login(String name, String password) {
+        Optional<Customer> customerOptional = customerRepository.findByNameAndPassword(name,password);
+        if (customerOptional != customerRepository.findByNameAndPassword(name, password))
+            System.out.println("Logged in successfully.");
+        else {
+            System.out.println("Invalid info.");
+        }
+        return customer;
     }
     public Product addProduct(String name, double price) {
         Optional<Product> product = productRepository.findByName(name);
@@ -45,12 +58,10 @@ public class ShopService {
         Product product = getByIdProduct(id);
             cart.getCartList().add(new OrderItem(product, amount));
     }
-    public void addToOrder() {
+    public void createOrderFromCart() {
         customer.getCustomerOrders().add(new CustomerOrder(getCart().getCartList(),customer));
-//        customer.addOrder(new CustomerOrder(getCart().getCartList(),customer));
         customer = customerRepository.save(customer);
     }
-
     public List<Product> showProductsInStore() {
         productRepository.save(new Product(1L, "Chicken", 50));
         productRepository.save(new Product(2L, "Beef", 60));
@@ -64,7 +75,7 @@ public class ShopService {
     }
     public Product findById(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
-        if (!productOptional.isPresent()) {
+        if (productOptional.isEmpty()) {
             throw new RuntimeException("Product not found");
         }
         return productOptional.get();
@@ -93,6 +104,8 @@ public class ShopService {
         return this.cart;
     }
 
+
+
     public CustomerOrder getCustomerOrder() {
         return this.customerOrder;
     }
@@ -108,4 +121,6 @@ public class ShopService {
     public void saveOrder(CustomerOrder customerOrder) {
         customerOrder = orderRepository.save(customerOrder);
     }
+
+
 }

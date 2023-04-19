@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 public class CustomerOrder {
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     List<OrderItem> cart;
     @ManyToOne
     Customer customer;

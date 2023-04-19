@@ -6,22 +6,29 @@
 </head>
 <body>
 <h1><em><strong>Welcome to Jakobs webshop</strong></em></h1>
-Enter a username and password to begin shopping. <br/>
+<h2>Register</h2>
 <form action="/createnewuser" method="post">
-    <p>
-        Name: <input type="text" name="name"/> </br>
+        Username: <input type="text" name="name"/> </br>
         Password: <input type="text" name="password">
-    </p>
+        Admin: <input type="checkbox" name="admin">
     <p>
         <input type="submit" value="New Customer"></br>
     </p>
-    <a href="/shop-products">Enter the shop</a>
-    <p>
-        <a href="/showallcustomers">Show customers</a>
-    </p>
-    <p>
-        <a href="findproducts.html">Find products</a>
-    </p>
+
 </form>
 </body>
+<h2>Login</h2>
+<form action="/login" method="post">
+    Username:<input type="text" name="name"></br>
+    Password: <input type="text" name="password"></br>
+    <input type="submit" value="Login">
+</form>
+
+<a href="/shop-products">Enter the shop</a>
+<p>
+    <a href="/showallcustomers">Show customers</a>
+</p>
+<p>
+    <a href="findproducts.html">Find products</a>
+</p>
 </html>
