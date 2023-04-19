@@ -15,8 +15,11 @@ public class ShopController {
     ShopService service;
 
     @PostMapping("/createnewuser") // creates a new user and adds it into the database
-    public String createNewUser(@RequestParam String name, @RequestParam String password, Model model) {
-        model.addAttribute("customer", service.addNewUser(name, password));
+    public String createNewUser(@RequestParam String name, @RequestParam String password, @RequestParam(value = "admin", required = false)Boolean admin, Model model) {
+        if (admin == null) {
+            admin = false;
+        }
+        model.addAttribute("customer", service.addNewUser(name,password,admin));
         return "redirect:/";
     }
     @PostMapping("/login") // log in as an existing user

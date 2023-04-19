@@ -25,16 +25,15 @@ public class ShopService {
     Product product;
     Customer customer;
     CustomerOrder customerOrder;
-
     Cart cart = new Cart();
     public ShopService() {}
 
-    public Customer addNewUser(String name, String password) {
+    public Customer addNewUser(String name, String password, boolean admin) {
         Optional<Customer> customerOptional = customerRepository.findByName(name);
         if (customerOptional != customerRepository.findByName(name))
             System.out.println("This user already exists.");
         else {
-            customer = customerRepository.save(new Customer(name, password));
+            customer = customerRepository.save(new Customer(name, password,admin));
             System.out.println("User saved successfully.");
         }
         return customer;
