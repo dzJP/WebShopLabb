@@ -22,10 +22,11 @@ public class ShopService {
     ProductRepository productRepository;
     @Autowired
     OrderRepository orderRepository;
-    Customer customer;
     Product product;
+    Customer customer;
+    CustomerOrder customerOrder;
     Cart cart = new Cart();
-    CustomerOrder customerOrder = new CustomerOrder();
+
 
     public ShopService() {}
     public void addOrder() {}
@@ -44,13 +45,12 @@ public class ShopService {
         Product product = getByIdProduct(id);
             cart.getCartList().add(new OrderItem(product, amount));
     }
-    public void addIntoOrder() {
-        customer.addOrder(new CustomerOrder(getCart().getCartList(),customer));
+    public void addToOrder() {
+        customer.getCustomerOrders().add(new CustomerOrder(getCart().getCartList(),customer));
+//        customer.addOrder(new CustomerOrder(getCart().getCartList(),customer));
         customer = customerRepository.save(customer);
     }
-    public void saveOrder(CustomerOrder customerOrder) {
-        customerOrder = orderRepository.save(customerOrder);
-    }
+
     public List<Product> showProductsInStore() {
         productRepository.save(new Product(1L, "Chicken", 50));
         productRepository.save(new Product(2L, "Beef", 60));
@@ -74,6 +74,10 @@ public class ShopService {
         return productRepository.findById(id).get();
     }
 
+    public CustomerOrder getByIdOrder(Long id) {
+        return orderRepository.findById(id).get();
+    }
+
     public Product findByName(String name) {
         Optional<Product> productOptional = productRepository.findByName(name);
         if (!productOptional.isPresent()) {
@@ -81,24 +85,27 @@ public class ShopService {
         }
         return productOptional.get();
     }
-
     public Product getByNameProduct(String name) {
         return productRepository.findByName(name).get();
-    }
-
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll();
     }
 
     public Cart getCart() {
         return this.cart;
     }
+
+    public CustomerOrder getCustomerOrder() {
+        return this.customerOrder;
+    }
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
+    }
     public List<CustomerOrder> getCustomerOrders() {
         return customer.getCustomerOrders();
     }
-
-    public CustomerOrder getCustomerOrder() {
-        return customerOrder;
+    public List<CustomerOrder> getAllCustomerOrders() {
+        return orderRepository.findAll();
     }
-
+    public void saveOrder(CustomerOrder customerOrder) {
+        customerOrder = orderRepository.save(customerOrder);
+    }
 }

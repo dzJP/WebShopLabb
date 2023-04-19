@@ -20,10 +20,14 @@ public class Customer {
         this.name = name;
         this.password = password;
     }
+    public Customer(Long id, List<CustomerOrder> customerOrders) {
+        this.id = id;
+        this.customerOrders = customerOrders;
+    }
+
     public void addOrder(CustomerOrder customerOrder){
         customerOrders.add(customerOrder);
     }
-
     public Long getId() {
         return id;
     }

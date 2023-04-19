@@ -1,11 +1,12 @@
 package com.example.webshoplabb.ui;
 
-import com.example.webshoplabb.shop.Product;
-import com.example.webshoplabb.shop.ShopService;
+import com.example.webshoplabb.shop.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class ShopController {
@@ -37,7 +38,6 @@ public class ShopController {
         m.addAttribute("product", new Product());
         return "newproductpage";
     }
-
     @GetMapping("/shop-products")
     public String getProductsInShop(Model m) {
         m.addAttribute("productList", service.showProductsInStore());
@@ -64,8 +64,17 @@ public class ShopController {
     @PostMapping("/order")
     public String addOrder(Model m) {
         service.addOrder();
-        m.addAttribute("mycart", service.getCart());
+        m.addAttribute("myorder", service.getCart());
         m.addAttribute("totalpriceofallproducts", service.getCart().getTotalCostOfProductsInCart());
         return "addorderpage";
     }
+
+//    @PostMapping("/order")
+//    public String addOrder(Model m) {
+//        service.addToOrder();
+//        m.addAttribute("myorder", service.getCustomerOrder());
+//        return "addorderpage";
+//    }
+
+
 }
