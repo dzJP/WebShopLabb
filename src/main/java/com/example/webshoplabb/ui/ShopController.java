@@ -3,6 +3,7 @@ package com.example.webshoplabb.ui;
 import com.example.webshoplabb.shop.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class ShopController {
     @Autowired
     ShopService service;
 
-    @PostMapping("/createnewuser") // create a new user with admin privilegies
+    @PostMapping("/createnewuser") // create a new user with either admin or regular privilegies.
     public String createNewUser(@RequestParam String name, @RequestParam String password, @RequestParam(value = "admin", required = false)Boolean admin, Model model) {
         if (admin == null) {
             admin = false;
@@ -25,12 +26,11 @@ public class ShopController {
     @PostMapping("/login") // log in as an existing user
     public String login(@RequestParam String name, @RequestParam String password, Model model) {
         model.addAttribute("customer",service.login(name,password));
-        return "redirect:/";
-    }
-    @GetMapping("/showallcustomers") // shows a page of all customers in database
-    public String getAllCustomers(Model m) {
-        m.addAttribute("showallcustomers", service.getAllCustomers());
-        return "showallcustomerspage";
+        model.addAttribute("productList", service.showProductsInStore());
+        if (service.isAdmin()) {
+            return "adminpage";
+        }
+        return "shoppage";
     }
     @PostMapping("/findproducts") // shows a page where we can search for a product in the database
     public String findProductsByName(Model m, @RequestParam String productName) {
@@ -79,4 +79,15 @@ public class ShopController {
         return "addorderpage";
     }
 
+    @GetMapping("/showallcustomers") // shows a page of all customers in database
+    public String getAllCustomers(Model m) {
+        m.addAttribute("showallcustomers", service.getAllCustomers());
+        return "showallcustomerspage";
+    }
+    @GetMapping("/showallorders")
+    public String getAllOrders(Model m) {
+        m.addAttribute("showallorders", service.getAllCustomerOrders());
+        m.addAttribute("customer", service.getAllCustomers());
+        return "showallorderspage";
+    }
 }

@@ -38,7 +38,6 @@ public class ShopService {
         }
         return customer;
     }
-
     public Customer login(String name, String password) {
         Optional<Customer> customerOptional = customerRepository.findByNameAndPassword(name,password);
         if (customerOptional != customerRepository.findByNameAndPassword(name, password))
@@ -47,6 +46,10 @@ public class ShopService {
             System.out.println("Invalid info.");
         }
         return customer;
+    }
+
+    public Boolean isAdmin() {
+        return customer.isAdmin();
     }
     public Product addProduct(String name, double price) {
         Optional<Product> product = productRepository.findByName(name);
@@ -79,15 +82,12 @@ public class ShopService {
         }
         return productOptional.get();
     }
-
     public Product getByIdProduct(Long id) {
         return productRepository.findById(id).get();
     }
-
     public CustomerOrder getByIdOrder(Long id) {
         return orderRepository.findById(id).get();
     }
-
     public Product findByName(String name) {
         Optional<Product> productOptional = productRepository.findByName(name);
         if (!productOptional.isPresent()) {
@@ -98,13 +98,9 @@ public class ShopService {
     public Product getByNameProduct(String name) {
         return productRepository.findByName(name).get();
     }
-
     public Cart getCart() {
         return this.cart;
     }
-
-
-
     public CustomerOrder getCustomerOrder() {
         return this.customerOrder;
     }
@@ -120,6 +116,4 @@ public class ShopService {
     public void saveOrder(CustomerOrder customerOrder) {
         customerOrder = orderRepository.save(customerOrder);
     }
-
-
 }
