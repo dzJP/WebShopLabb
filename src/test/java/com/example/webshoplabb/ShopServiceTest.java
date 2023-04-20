@@ -25,7 +25,6 @@ public class ShopServiceTest {
         Customer customer1 = new Customer("name","password");
         System.out.println("Name: " + customer1.getName() +
                 "\nPassword: " + customer1.getPassword());
-
     }
 
 }

@@ -51,9 +51,9 @@ public class ShopService {
     public Boolean isAdmin() {
         return customer.isAdmin();
     }
-    public Product addProduct(String name, double price) {
+    public Product addProduct(String name, double price, Category category ) {
         Optional<Product> product = productRepository.findByName(name);
-        productRepository.save(new Product(name, price));
+        productRepository.save(new Product(name, price, category));
         return this.product;
     }
     public void addToCart(Long id, int amount) {
@@ -65,11 +65,11 @@ public class ShopService {
         customer = customerRepository.save(customer);
     }
     public List<Product> showProductsInStore() {
-        productRepository.save(new Product(1L, "Chicken", 50));
-        productRepository.save(new Product(2L, "Beef", 60));
-        productRepository.save(new Product(3L, "Fish", 70));
-        productRepository.save(new Product(4L, "Apple", 10));
-        productRepository.save(new Product(5L, "Banana", 5));
+        productRepository.save(new Product(1L, "Chicken", 50, Category.MAT));
+        productRepository.save(new Product(2L, "Beef", 60, Category.MAT));
+        productRepository.save(new Product(3L, "Fish", 70, Category.MAT));
+        productRepository.save(new Product(4L, "Apple", 10, Category.MAT));
+        productRepository.save(new Product(5L, "Banana", 5, Category.MAT));
         return productRepository.findAll();
     }
     public void deleteProduct() {
@@ -112,8 +112,5 @@ public class ShopService {
     }
     public List<CustomerOrder> getAllCustomerOrders() {
         return orderRepository.findAll();
-    }
-    public void saveOrder(CustomerOrder customerOrder) {
-        customerOrder = orderRepository.save(customerOrder);
     }
 }

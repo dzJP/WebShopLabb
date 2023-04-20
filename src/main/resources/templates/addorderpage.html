@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>Order List</h1>
+
 You have bought:
 <div th:each="item, loopInfo: ${myorder.cartList}">
   Name:<span th:text="${item.product.name}"></span>

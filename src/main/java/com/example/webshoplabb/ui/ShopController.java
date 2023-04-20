@@ -37,23 +37,22 @@ public class ShopController {
         m.addAttribute("productList", service.getByNameProduct(productName));
         return "showfoundproductspage";
     }
-
     @PostMapping("/newproduct") // creates a new product and adds it into list of products in database
-    String addNewProduct(@RequestParam String name, double price,  Model model) {
-        model.addAttribute("product", service.addProduct(name, price));
+    String addNewProduct(@RequestParam String name, double price, Category category, Model model) {
+        model.addAttribute("product", service.addProduct(name, price, category));
         return "redirect:/";
     }
-    @GetMapping("/newproduct")
+    @GetMapping("/newproduct") // get new product
     String addNewForm(Model m) {
         m.addAttribute("product", new Product());
         return "newproductpage";
     }
-    @GetMapping("/shop-products")
+    @GetMapping("/shop-products") // shows the current products in store
     public String getProductsInShop(Model m) {
         m.addAttribute("productList", service.showProductsInStore());
         return "shoppage";
     }
-    @PostMapping("/shop-products")
+    @PostMapping("/shop-products") // adds products from shop into cart
     public String addToCart(@RequestParam Long id, @RequestParam int amount, Model m) {
         service.addToCart(id, amount);
         m.addAttribute("productList", service.showProductsInStore());
@@ -78,16 +77,17 @@ public class ShopController {
         m.addAttribute("totalpriceofallproducts", service.getCart().getTotalCostOfProductsInCart());
         return "addorderpage";
     }
-
     @GetMapping("/showallcustomers") // shows a page of all customers in database
     public String getAllCustomers(Model m) {
         m.addAttribute("showallcustomers", service.getAllCustomers());
         return "showallcustomerspage";
     }
-    @GetMapping("/showallorders")
-    public String getAllOrders(Model m) {
+    @GetMapping("/showallorders") // shows a page of all orders in database
+    public String getAllOrdersPage(Model m) {
+//        service.getCustomerOrder().setSending(true);
         m.addAttribute("showallorders", service.getAllCustomerOrders());
         m.addAttribute("customer", service.getAllCustomers());
         return "showallorderspage";
     }
+
 }

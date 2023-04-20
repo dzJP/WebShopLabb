@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
 </head>
 <h2>Admin page</h2>
 <body>
+<h3>Logged in as:
+<span th:text="${customer.name}"></span></h3>
+<a  href="/newproduct">Create a product to add to database</a>
 <p>
-    <a  href="/newproduct">Create a product to add to database</a>
-</p>
-<p>
-<a href="/showallcustomers">Show all customer</a>
+<a href="/showallcustomers">Show all customers</a>
 </p>
 <p>
 <a href="/showallorders">Show all orders</a>

@@ -23,8 +23,8 @@ public class CartTest {
     public void beforeClass() {
         Product exampleproduct1 = Mockito.mock(Product.class);
         Product exampleproduct2 = Mockito.mock(Product.class);
-        shopService.addProduct(exampleproduct1.getName(), exampleproduct1.getPrice());
-        shopService.addProduct(exampleproduct2.getName(),exampleproduct1.getPrice());
+        shopService.addProduct(exampleproduct1.getName(), exampleproduct1.getPrice(), exampleproduct1.getCategory());
+        shopService.addProduct(exampleproduct2.getName(),exampleproduct1.getPrice(),exampleproduct2.getCategory());
         shopService.addToCart(1L,1);
         shopService.addToCart(2L,1);
     }

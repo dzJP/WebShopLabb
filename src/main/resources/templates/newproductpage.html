@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create product</title>
@@ -10,6 +10,9 @@
   <p th:text="${productmessage}"><p/>
     Name: <input type="text" th:field="*{name}"/> </br>
     Price: <input type="text" th:field="*{price}"/>
+    Category:<select th:field="*{category}">
+            <option th:each="cat : ${T(com.example.webshoplabb.shop.Category).values()}" th:value="${cat}" th:text="${cat}"></option>
+            </select>
     <input type="submit" value="New Product">
   </form>
 </body>

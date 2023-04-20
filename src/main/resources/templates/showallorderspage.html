@@ -9,8 +9,13 @@
     Order id: <span th:text="${customerorder.id}"></span>
     Customer id: <span th:text="${customerorder.customer.id}"></span>
     Customer name: <span th:text="${customerorder.customer.name}"></span>
+    <span th:text="${customerorder.setSending(true)}"></span>
+    Sending: <span th:text="${customerorder.getSending()}"></span>
+    <div th:each="item : ${customerorder.cart}">
+        Product name: <span th:text="${item.product.name}"></span>
+        Amount:<span th:text="${item.amount}"></span>
+    </div>
 </div>
-</div>
-</div>
+
 </body>
 </html>

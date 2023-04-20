@@ -11,6 +11,7 @@ public class CustomerOrder {
     List<OrderItem> cart;
     @ManyToOne
     Customer customer;
+    Boolean sending;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +19,7 @@ public class CustomerOrder {
     public CustomerOrder(List<OrderItem> cart, Customer customer) {
         this.customer = customer;
         this.cart = cart;
+        this.sending = false;
     }
     public CustomerOrder() {}
 
@@ -38,5 +40,13 @@ public class CustomerOrder {
     }
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Boolean getSending() {
+        return sending;
+    }
+
+    public void setSending(Boolean sending) {
+        this.sending = sending;
     }
 }

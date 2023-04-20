@@ -10,12 +10,14 @@
 <div th:each="product : ${productList}">
   <span th:text="${product.name}"></span>
   <span th:text="${product.price}"></span>
+  <span th:text="${product.category}"></span>
   <form action="/shop-products" method="post">
     <input type="hidden" name="id" th:value="${product.id}">
     Amount:<input type="text" name="amount" value="1">
     <input type="submit" value="Add">
   </form>
 </div>
+
 <p>
   <h3><a href="/showcart">Show cart</a></br></h3>
 </p>
