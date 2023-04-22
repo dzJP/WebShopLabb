@@ -11,13 +11,13 @@
   <option th:each="cat : ${T(com.example.webshoplabb.shop.Category).values()}"
           th:value="${cat}" th:text="${cat}"></option></select>
 </form>
-Search for a product(banana, beef, fish, etc)
+<h3>Search for a product(banana, beef, fish, etc)</h3>
 <form action="/findproducts" method="post">
     <input type="text" value="0" name="productName">
     <input type="submit" value="Search">
     <div th:each="product : ${products}"></div>
 </form>
-<p><a href="/shop-products">Enter the shop</a></p>
+<p><h3><a href="/shop-products">Enter the shop</a></p></h3>
 </div>
 </body>
 </html>
