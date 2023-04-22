@@ -2,8 +2,6 @@ package com.example.webshoplabb.shop;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 
 @Entity
 public class Product {

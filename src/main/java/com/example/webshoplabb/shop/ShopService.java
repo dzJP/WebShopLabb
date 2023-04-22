@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @SessionScope
@@ -64,7 +62,7 @@ public class ShopService {
         customer.getCustomerOrders().add(new CustomerOrder(getCart().getCartList(),customer));
         customer = customerRepository.save(customer);
     }
-    public List<Product> showProductsInStore() {
+    public List<Product> getProductsInStore() {
         productRepository.save(new Product(1L, "Chicken", 50, Category.MAT));
         productRepository.save(new Product(2L, "Beef", 60, Category.MAT));
         productRepository.save(new Product(3L, "Fish", 70, Category.MAT));
@@ -98,6 +96,11 @@ public class ShopService {
     public Product getByNameProduct(String name) {
         return productRepository.findByName(name).get();
     }
+
+    public List<Product> getProductByCategory(Category category) {
+        return productRepository.findByCategory(category);
+    }
+
     public Cart getCart() {
         return this.cart;
     }
@@ -113,4 +116,6 @@ public class ShopService {
     public List<CustomerOrder> getAllCustomerOrders() {
         return orderRepository.findAll();
     }
+
+
 }

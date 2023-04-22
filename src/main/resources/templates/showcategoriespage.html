@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Categories</h2>
+<form th:action="@{/shop-products}" method="post" th:object="${product}">
+  Category: <select name="category">
+  <option th:each="cat : ${T(com.example.webshoplabb.shop.Category).values()}"
+          th:value="${cat}" th:text="${cat}"></option></select>
+</form>
+Search for a product(banana, beef, fish, etc)
+<form action="/findproducts" method="post">
+    <input type="text" value="0" name="productName">
+    <input type="submit" value="Search">
+    <div th:each="product : ${products}"></div>
+</form>
+<p><a href="/shop-products">Enter the shop</a></p>
+</div>
+</body>
+</html>
