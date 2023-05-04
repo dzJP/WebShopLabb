@@ -63,15 +63,33 @@ public class ShopService {
         customer = customerRepository.save(customer);
     }
     public List<Product> getProductsInStore() {
-        productRepository.save(new Product(1L, "Chicken", 50, Category.MAT));
-        productRepository.save(new Product(2L, "Beef", 60, Category.MAT));
-        productRepository.save(new Product(3L, "Fish", 70, Category.MAT));
-        productRepository.save(new Product(4L, "Apple", 10, Category.MAT));
-        productRepository.save(new Product(5L, "Banana", 5, Category.MAT));
+        productRepository.save(new Product(1L, "Chicken", 59, Category.FOOD));
+        productRepository.save(new Product(2L, "Beef", 69, Category.FOOD));
+        productRepository.save(new Product(3L, "Fish", 79, Category.FOOD));
+        productRepository.save(new Product(4L, "Apple", 5, Category.FOOD));
+        productRepository.save(new Product(5L, "Banana", 5, Category.FOOD));
+        productRepository.save(new Product(6L, "CocaCola", 10, Category.DRINKS));
+        productRepository.save(new Product(7L, "Fanta", 10, Category.DRINKS));
+        productRepository.save(new Product(8L, "Coffee", 20, Category.DRINKS));
+        productRepository.save(new Product(9L, "Toothpicks", 1, Category.HOUSEHOLD));
+        productRepository.save(new Product(10L, "Soap", 15, Category.HOUSEHOLD));
+        productRepository.save(new Product(11L, "Toothbrush", 20, Category.HOUSEHOLD));
+        productRepository.save(new Product(12L, "Toothpaste", 20, Category.HOUSEHOLD));
+        productRepository.save(new Product(13L, "TV", 7000, Category.ELECTRONICS));
+        productRepository.save(new Product(14L, "Computer", 5000, Category.ELECTRONICS));
+        productRepository.save(new Product(15L, "MobilePhone", 3000, Category.ELECTRONICS));
+        productRepository.save(new Product(16L, "Bed", 1500, Category.FURNITURE));
+        productRepository.save(new Product(17L, "Table", 500, Category.FURNITURE));
+        productRepository.save(new Product(18L, "Chair", 100, Category.FURNITURE));
+        productRepository.save(new Product(19L, "Couch", 1000, Category.FURNITURE));
         return productRepository.findAll();
     }
-    public void deleteProduct() {
+    public void deleteProductFromCart() {
         cart.getCartList().remove(0);
+    }
+    public List<Product> deleteProductFromDataBase(Long id) {
+        productRepository.deleteById(id);
+        return productRepository.findAll();
     }
     public Product findById(Long id) {
         Optional<Product> productOptional = productRepository.findById(id);
@@ -118,4 +136,25 @@ public class ShopService {
     }
 
 
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    public List<Product> findByCategory(String category) {
+        return productRepository.findByCategory(Category.valueOf(category));
+    }
+
+    public Product updatePrice(Long id, Double price) {
+        product = productRepository.findById(id).get();
+        product.setPrice(price);
+        product = productRepository.save(product);
+        return product;
+    }
+
+    public Product updateName(Long id, String name) {
+        product = productRepository.findById(id).get();
+        product.setName(name);
+        product = productRepository.save(product);
+        return product;
+    }
 }

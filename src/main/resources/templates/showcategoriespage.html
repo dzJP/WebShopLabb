@@ -7,7 +7,7 @@
 <body>
 <h2>Categories</h2>
 <form th:action="@{/shop-products}" method="post" th:object="${product}">
-  Category: <select name="category">
+  All categories: <select name="category">
   <option th:each="cat : ${T(com.example.webshoplabb.shop.Category).values()}"
           th:value="${cat}" th:text="${cat}"></option></select>
 </form>
@@ -17,6 +17,16 @@
     <input type="submit" value="Search">
     <div th:each="product : ${products}"></div>
 </form>
+<div th:each="product : ${productList}">
+    <span th:text="${product.name}"></span>
+    <span th:text="${product.price}"></span>
+    <span th:text="${product.category}"></span>
+    <form action="/shop-products" method="post">
+        <input type="hidden" name="id" th:value="${product.id}">
+        Amount:<input type="text" name="amount" value="1">
+        <input type="submit" value="Add">
+    </form>
+</div>
 <p><h3><a href="/shop-products">Enter the shop</a></p></h3>
 </div>
 </body>

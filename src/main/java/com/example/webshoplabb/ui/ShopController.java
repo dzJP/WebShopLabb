@@ -73,7 +73,7 @@ public class ShopController {
     }
     @PostMapping("/removeproductfromcart") // removes an item from the cart
     public String removeProductFromCart(Model m) {
-        service.deleteProduct();
+        service.deleteProductFromCart();
         m.addAttribute("mycart", service.getCart());
         return "showcartpage";
     }
